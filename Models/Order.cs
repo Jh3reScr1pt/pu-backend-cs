@@ -10,6 +10,7 @@ namespace pu_backend_cs.Models
     {
         public Order()
         {
+            orderNumber = new Random().Next(1,26);
             status = "Food Processing";
             date = DateTime.Now;
         }
@@ -20,7 +21,7 @@ namespace pu_backend_cs.Models
         public int ubicationId { get; set; }
         public int orderNumber { get; set; }
         public string status { get; set; } 
-        public DateTime date { get; set; } = DateTime.Now;
+        public DateTime date { get; set; }
         public virtual Ubication? oUbication { get; set; }
     }
 }
