@@ -18,15 +18,18 @@ namespace pu_backend_cs.Data
         }
 
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Ubication> Ubications { get; set; }
+        public DbSet<Item> Items { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Order>()
-                .HasOne(o => o.oUbication)
-                .WithMany()
-                .HasForeignKey(o => o.ubicationId);
+                .HasMany(o => o.items)
+                .WithOne()
+                .HasForeignKey(i => i.orderId); // Assuming you have an OrderId property in Item class
+
+            base.OnModelCreating(modelBuilder);
         }
+        
 
     }
 }

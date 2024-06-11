@@ -30,12 +30,12 @@ namespace pu_backend_cs.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
-                    b.Property<int?>("Orderid")
-                        .HasColumnType("integer");
-
                     b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("orderId")
+                        .HasColumnType("integer");
 
                     b.Property<decimal>("price")
                         .HasColumnType("numeric");
@@ -45,9 +45,9 @@ namespace pu_backend_cs.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("Orderid");
+                    b.HasIndex("orderId");
 
-                    b.ToTable("Item");
+                    b.ToTable("Items");
                 });
 
             modelBuilder.Entity("pu_backend_cs.Models.Order", b =>
@@ -71,60 +71,30 @@ namespace pu_backend_cs.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("ubicationId")
-                        .HasColumnType("integer");
+                    b.Property<string>("ubicationUni")
+                        .IsRequired()
+                        .HasColumnType("text");
 
-                    b.Property<string>("userCI")
+                    b.Property<string>("userEmail")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("userId")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("id");
-
-                    b.HasIndex("ubicationId");
 
                     b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("pu_backend_cs.Models.Ubication", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
-
-                    b.Property<string>("floor")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("state")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("tower")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("id");
-
-                    b.ToTable("Ubications");
                 });
 
             modelBuilder.Entity("pu_backend_cs.Models.Item", b =>
                 {
                     b.HasOne("pu_backend_cs.Models.Order", null)
                         .WithMany("items")
-                        .HasForeignKey("Orderid");
-                });
-
-            modelBuilder.Entity("pu_backend_cs.Models.Order", b =>
-                {
-                    b.HasOne("pu_backend_cs.Models.Ubication", "oUbication")
-                        .WithMany()
-                        .HasForeignKey("ubicationId")
+                        .HasForeignKey("orderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("oUbication");
                 });
 
             modelBuilder.Entity("pu_backend_cs.Models.Order", b =>

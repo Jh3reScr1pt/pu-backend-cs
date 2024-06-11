@@ -11,5 +11,6 @@ namespace pu_backend_cs.Models
         public string name { get; set; }
         public decimal price { get; set; }
         public int quantity { get; set; }
+        public int orderId { get; set; }
     }
 }
